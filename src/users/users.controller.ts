@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Put, ParseIntPipe, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Put, ParseIntPipe, Headers, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -6,6 +6,7 @@ import {idDto} from './dto/id.dto';
 import { ParseIdPipe } from './pipes/parseIdPipe';
 import { HeaderDto } from './dto/header.dto';
 import { RequesHeader } from './pipes/requestHeader';
+import { Pagination } from 'src/common/dto/pagination.dto';
 
 @Controller('users')
 export class UsersController {
@@ -32,8 +33,8 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query() pagination: Pagination) {
+    return this.usersService.findAll(pagination);
   }
 
   @Get(':id')

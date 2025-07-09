@@ -1,4 +1,4 @@
-import { dbPostgresConfig } from "../config/dbPostgres.config";
+import  dbPostgresConfig  from "../config/dbPostgres.config";
 import { DataSource, DataSourceOptions } from "typeorm";
 import {  runSeeders, SeederOptions } from "typeorm-extension";
 import { orderFactory } from "./order.Factory";
@@ -10,7 +10,7 @@ import { mainSeed } from "./main.Seeder";
 
 
 const option : DataSourceOptions & SeederOptions = {
-    ...dbPostgresConfig,
+    ...dbPostgresConfig(),
     factories:[orderFactory,productFactory, orderDetailFactory,userFactory,userProfileFactory],
     seeds: [mainSeed]
 }

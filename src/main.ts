@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { log } from 'console';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,6 +12,8 @@ async function bootstrap() {
   //     forbidNonWhitelisted: true // trả về lỗi nếu có trường ko có trong dto
   //   })
   // );
+  console.log(process.env.URLA);
+  
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

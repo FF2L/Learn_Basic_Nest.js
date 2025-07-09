@@ -1,9 +1,11 @@
 import { UserProfile } from './../../user-profile/entities/user-profile.entity';
 import { Delete } from '@nestjs/common';
 import { isEmail, IsEmail } from 'class-validator';
+import { promises } from 'dns';
 import { BaseEntity } from 'src/common/entity/base.entity';
+import { Order } from 'src/order/entities/order.entity';
 import { Product } from 'src/products/entities/product.entity';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User extends BaseEntity{
@@ -21,5 +23,13 @@ export class User extends BaseEntity{
 
     @OneToMany(() => Product, (product)=> product.user, {cascade:true})
     products: Product[]
+
+    @OneToMany(()=> Order, (order)=> order.user,{cascade:true, lazy:true})
+    order: Promise<Order[]>
+
+
+   
+
+    
 
 }

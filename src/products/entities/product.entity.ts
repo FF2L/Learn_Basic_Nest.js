@@ -1,6 +1,8 @@
 import { BaseEntity } from "src/common/entity/base.entity";
+import { Order } from "src/order/entities/order.entity";
+import { OrderDetail } from "src/order_detail/entities/order_detail.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Product extends BaseEntity {
@@ -12,6 +14,10 @@ export class Product extends BaseEntity {
     type:string;
     @Column()
     price:number;
+
     @ManyToOne(() => User,(user) => user.products)
     user: User
+
+     @OneToMany(() => OrderDetail, (orderDetail)=> orderDetail.productId, {cascade:true, lazy:true})
+     orderDetail: Promise<Order[]>
 }

@@ -11,4 +11,8 @@ export class CreateUserDto {
     @IsInt({always: true})
     @IsPositive() //số dương
     age: number;
+
+    @IsString()
+    @IsNotEmpty()
+    password:string
 }

@@ -9,6 +9,7 @@ import { ProductsModule } from './products/products.module';
 import { OrderModule } from './order/order.module';
 import { OrderDetailModule } from './order_detail/order_detail.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 
 
@@ -23,7 +24,7 @@ import { ConfigModule } from '@nestjs/config';
      TypeOrmModule.forRootAsync({
       useFactory: dbPostgresConfig, // sử dụng khi dbPostgressCOnfig file trả về một hàm trả về instance của PostgresConnectionOptions
      })
-    , UserProfileModule, ProductsModule, OrderModule, OrderDetailModule],
+    , UserProfileModule, ProductsModule, OrderModule, OrderDetailModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -6,9 +6,8 @@ import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pagination } from 'src/common/dto/pagination.dto';
 import { DEFAULT_PAGE_LIMIT } from 'src/common/utils/pagelimit';
-import * as bcrypt from 'bcrypt';
 
-@Injectable({scope: Scope.REQUEST}) // de963 mỗi request tạo một instance mới nếu ko thì sẽ dùng chung instance,
+@Injectable(/*{scope: Scope.REQUEST}*/) // de963 mỗi request tạo một instance mới nếu ko thì sẽ dùng chung instance,
 //  nếu có thay đổi sẽ không ảnh hưởng đến các request khác
 export class UsersService {
 
@@ -44,7 +43,7 @@ export class UsersService {
   }
 
   async timTheoEmail(email: string) {
-    return  await this.userRepository.findOne({
+    return await this.userRepository.findOne({
       where: {email}
     })
 

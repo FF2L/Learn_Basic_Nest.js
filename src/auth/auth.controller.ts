@@ -1,7 +1,9 @@
-import { Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, HttpCode, HttpStatus, Post, Req, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthLocalGuard } from './guard/auth-local/auth-local.guard';
+import { RefeshJwtStrategy } from './strategies/refeshJwt.strategy';
+import { AuthRefeshjwtGuard } from './guard/auth-refeshjwt/auth-refeshjwt.guard';
 
 
 @Controller('auth')
@@ -15,4 +17,12 @@ export class AuthController {
     const token = this.authService.login(req.user.userId)
     return {token};
   }
+
+  @UseGuards(AuthRefeshjwtGuard)
+  @Post('refesh')
+  refesh(@Req() req){
+    console.log(req.user)
+    return {token: this.authService.refesh(req.user.userId) }
+  }
+
 }

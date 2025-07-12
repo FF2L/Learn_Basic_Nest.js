@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pagination } from 'src/common/dto/pagination.dto';
 import { DEFAULT_PAGE_LIMIT } from 'src/common/utils/pagelimit';
+import { instanceToPlain } from 'class-transformer';
 
 @Injectable(/*{scope: Scope.REQUEST}*/) // de963 mỗi request tạo một instance mới nếu ko thì sẽ dùng chung instance,
 //  nếu có thay đổi sẽ không ảnh hưởng đến các request khác
@@ -53,6 +54,10 @@ export class UsersService {
       where: {id},
     })
    
-    return user
+    return instanceToPlain(user) // instanceToPlain sẽ loại bỏ các trường có decorator @Exclude() trong entity
+
+    // main.ts app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector))); áp dụng ClassSerializerInterceptor 
+    // toàn cục để tự động chuyển đổi các entity sang plain object
+
   }
 }

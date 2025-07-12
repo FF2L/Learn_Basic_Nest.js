@@ -6,6 +6,7 @@ import { Order } from 'src/order/entities/order.entity';
 import { Product } from 'src/products/entities/product.entity';
 import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import * as brcypt from "bcrypt"
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity()
 export class User extends BaseEntity{
@@ -18,6 +19,7 @@ export class User extends BaseEntity{
     @Column({default: 18})
     age:number
     @Column ({nullable: true})
+    @Exclude() //Loại bỏ trường này khi trả về  response 
     password:string
 
     @OneToOne(() => UserProfile, (userProfile)=> userProfile, {cascade: true, lazy: true}) // Callback function để lấy ra UserProfile và casacde true để khi CUD User thì sẽ tự động CUD UserProfile

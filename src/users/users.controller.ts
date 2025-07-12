@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Put, ParseIntPipe, Headers, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Put, ParseIntPipe, Headers, Query, UseGuards, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -7,7 +7,8 @@ import { ParseIdPipe } from './pipes/parseIdPipe';
 import { HeaderDto } from './dto/header.dto';
 import { RequesHeader } from './pipes/requestHeader';
 import { Pagination } from 'src/common/dto/pagination.dto';
-
+import { AuthJwtGuard } from 'src/auth/guard/auth-jwt/auth-jwt.guard';
+//Lưu ý phải để /đường dẫn trc các params trong nestjs controler ko thì lỗi 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {} // readonly là không cho phép thay đổi giá trị hay state của biến này sau khi dc khởi tạo
@@ -37,10 +38,21 @@ export class UsersController {
     return this.usersService.findAll(pagination);
   }
 
+ @UseGuards(AuthJwtGuard)
+  @Get('profiled')
+  findProfiled(@Req() req){
+    console.log('hello')
+    return this.usersService.findProfile(req.user.userId)
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) { // ParseIntPipe sẽ tự động chuyển đổi id sang số nguyên, nếu không phải số nguyên sẽ trả về lỗi
     return this.usersService.findOne(+id);
   }
+
+ 
+
+
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {

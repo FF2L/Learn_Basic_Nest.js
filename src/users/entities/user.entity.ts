@@ -20,7 +20,7 @@ export class User extends BaseEntity{
     @Column ({nullable: true})
     password:string
 
-    @OneToOne(() => UserProfile, (userProfile)=> userProfile, {cascade: true}) // Callback function để lấy ra UserProfile và casacde true để khi CUD User thì sẽ tự động CUD UserProfile
+    @OneToOne(() => UserProfile, (userProfile)=> userProfile, {cascade: true, lazy: true}) // Callback function để lấy ra UserProfile và casacde true để khi CUD User thì sẽ tự động CUD UserProfile
     userProfile: UserProfile
 
     @OneToMany(() => Product, (product)=> product.user, {cascade:true})

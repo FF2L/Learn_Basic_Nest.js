@@ -12,6 +12,7 @@ export class AuthController {
   @UseGuards(AuthLocalGuard)//Sử dụng local strategy để xác thực người dùng
   @Post('login')
   async login(@Request() req){
-    return req.user;
+    const token = this.authService.login(req.user.userId)
+    return {token};
   }
 }
